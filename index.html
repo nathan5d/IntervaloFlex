@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Intervalos de Pausa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 500px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="time"] {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <script>
+          function calcularIntervalos() {
+            const horaInicio = document.getElementById("horaInicio").value;
+            const horaFim = document.getElementById("horaFim").value;
+            const duracaoMinimaIntervalo = 20;
+            const duracaoMaximaIntervalo = 25;
+
+            // Geração aleatória do tempo de trabalho entre 1 hora e 30 minutos a 1 hora e 40 minutos
+            const duracaoMinimaTrabalho = 90; // 1 hora e 30 minutos
+            const duracaoMaximaTrabalho = 100; // 1 hora e 40 minutos
+            const duracaoTrabalhoMinutos = Math.floor(Math.random() * (duracaoMaximaTrabalho - duracaoMinimaTrabalho + 1)) + duracaoMinimaTrabalho;
+
+            const horaInicioDate = new Date(`2023-08-23T${horaInicio}:00`);
+            const horaFimDate = new Date(`2023-08-23T${horaFim}:00`);
+
+            let intervalos = [];
+            let horaAtual = new Date(horaInicioDate);
+
+            while (horaAtual < horaFimDate) {
+                if (intervalos.length === 0) {
+                    horaAtual.setMinutes(horaAtual.getMinutes() + duracaoTrabalhoMinutos);
+                }
+
+                const duracaoIntervalo = Math.floor(Math.random() * (duracaoMaximaIntervalo - duracaoMinimaIntervalo + 1)) + duracaoMinimaIntervalo;
+                const intervaloFim = new Date(horaAtual);
+                intervaloFim.setMinutes(intervaloFim.getMinutes() + duracaoIntervalo);
+                intervalos.push({ inicio: new Date(horaAtual), fim: intervaloFim, duracao: duracaoIntervalo });
+                horaAtual.setMinutes(horaAtual.getMinutes() + duracaoTrabalhoMinutos);
+            }
+
+            const tabelaIntervalos = document.getElementById("tabelaIntervalos");
+            tabelaIntervalos.innerHTML = `
+        <h2>Horários de Intervalo:</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Intervalo</th>
+              <th>Início da Pausa</th>
+              <th>Final da Pausa</th>
+              <th>Tempo de Pausa</th>
+            </tr>
+          </thead>
+          <tbody>`;
+
+            for (let i = 0; i < intervalos.length; i++) {
+                const intervalo = intervalos[i];
+                const tr = document.createElement("tr");
+                const tdIntervalo = document.createElement("td");
+                tdIntervalo.textContent = i + 1;
+                tr.appendChild(tdIntervalo);
+                const tdInicio = document.createElement("td");
+                tdInicio.textContent = formatarHora(intervalo.inicio);
+                tr.appendChild(tdInicio);
+                const tdFim = document.createElement("td");
+                tdFim.textContent = formatarHora(intervalo.fim);
+                tr.appendChild(tdFim);
+                const tdDuracao = document.createElement("td");
+                tdDuracao.textContent = `${intervalo.duracao} min`;
+                tr.appendChild(tdDuracao);
+                tabelaIntervalos.querySelector("tbody").appendChild(tr);
+            }
+
+            tabelaIntervalos.innerHTML += `
+          </tbody>
+        </table>`;
+         // Descrição das funcionalidades
+         const descricao = document.getElementById("descricao");
+            descricao.innerHTML = `
+        <h3>Funcionalidades:</h3>
+        <p>Esta calculadora gera automaticamente os horários de intervalo durante um período de trabalho, considerando um tempo de trabalho aleatório entre 1 hora e 30 minutos a 1 hora e 40 minutos. Os intervalos de pausa são gerados de forma aleatória entre 20 e 25 minutos.</p>
+        `;
+        }
+        function formatarHora(data) {
+            const horas = data.getHours().toString().padStart(2, '0');
+            const minutos = data.getMinutes().toString().padStart(2, '0');
+            return `${horas}:${minutos}`;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Calculadora de Intervalos de Pausa</h1>
+        <label for="horaInicio">Hora de Início:</label>
+        <input type="time" id="horaInicio">
+        <label for="horaFim">Hora de Fim:</label>
+        <input type="time" id="horaFim">
+        <button onclick="calcularIntervalos()">Calcular Intervalos</button>
+        <div id="tabelaIntervalos"></div>
+        <div id="descricao"></div>
+    </div>
+</body>
+
+</html>
