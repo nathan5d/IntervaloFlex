@@ -76,7 +76,7 @@
         }
     </style>
     <script>
-          function calcularIntervalos() {
+        function calcularIntervalos() {
             const horaInicio = document.getElementById("horaInicio").value;
             const horaFim = document.getElementById("horaFim").value;
             const duracaoMinimaIntervalo = 20;
@@ -140,8 +140,8 @@
             tabelaIntervalos.innerHTML += `
           </tbody>
         </table>`;
-         // Descrição das funcionalidades
-         const descricao = document.getElementById("descricao");
+            // Descrição das funcionalidades
+            const descricao = document.getElementById("descricao");
             descricao.innerHTML = `
         <h3>Funcionalidades:</h3>
         <p>Esta calculadora gera automaticamente os horários de intervalo durante um período de trabalho, considerando um tempo de trabalho aleatório entre 1 hora e 30 minutos a 1 hora e 40 minutos. Os intervalos de pausa são gerados de forma aleatória entre 20 e 25 minutos.</p>
@@ -162,7 +162,9 @@
         <input type="time" id="horaInicio">
         <label for="horaFim">Hora de Fim:</label>
         <input type="time" id="horaFim">
-        <button onclick="calcularIntervalos()">Calcular Intervalos</button>
+        <div>
+            <button onclick="calcularIntervalos()">Calcular Intervalos</button>
+        </div>
         <div id="tabelaIntervalos"></div>
         <div id="descricao"></div>
     </div>
