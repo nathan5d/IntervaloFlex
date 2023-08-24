@@ -150,11 +150,11 @@
           <tbody>`;
 
             let textPausa = 'Pausa ';
-            for (let i = 1; i < intervalos.length + 1; i++) {
+            for (let i = 0; i < intervalos.length; i++) {
                 const intervalo = intervalos[i];
                 const tr = document.createElement("tr");
                 const tdIntervalo = document.createElement("td");
-                tdIntervalo.textContent = i + 'ª ' + textPausa;
+                tdIntervalo.textContent = (i + 1) + 'ª ' + textPausa;
                 tr.appendChild(tdIntervalo);
                 const tdInicio = document.createElement("td");
                 tdInicio.textContent = formatarHora(intervalo.inicio);
