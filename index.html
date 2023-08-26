@@ -13,6 +13,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="IntervaloFlex">
     <link rel="apple-touch-icon" href="icon.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" />
 
     <style>
         body {
@@ -94,7 +96,6 @@
             background-color: #f2f2f2;
         }
 
-
         #descricao {
             text-align: left;
             margin-top: 20px;
@@ -105,80 +106,113 @@
             line-height: 1.4;
         }
     </style>
+
     <script>
         function calcularIntervalos() {
             const horaInicio = document.getElementById("horaInicio").value;
             const horaFim = document.getElementById("horaFim").value;
-            const duracaoMinimaIntervalo = 20;
-            const duracaoMaximaIntervalo = 25;
-
-            // Geração aleatória do tempo de trabalho entre 1 hora e 30 minutos a 1 hora e 40 minutos
-            const duracaoMinimaTrabalho = 90; // 1 hora e 30 minutos
-            const duracaoMaximaTrabalho = 100; // 1 hora e 40 minutos
-            const duracaoTrabalhoMinutos = Math.floor(Math.random() * (duracaoMaximaTrabalho - duracaoMinimaTrabalho + 1)) + duracaoMinimaTrabalho;
 
             const horaInicioDate = new Date(`2023-08-23T${horaInicio}:00`);
             const horaFimDate = new Date(`2023-08-23T${horaFim}:00`);
 
+            const duracaoMinimaTrabalho = 95; // 1h35m em minutos
+            const duracaoMaximaTrabalho = 100; // 1h40m em minutos
+
+            const duracaoMinimaIntervalo = 20;
+            const duracaoMaximaIntervalo = 25;
+
+            const primeiraPausaInicio = new Date(horaInicioDate);
+            let duracaoTrabalhoPrimeiraPausaInicio = Math.floor(Math.random() * (duracaoMaximaTrabalho - duracaoMinimaTrabalho + 1)) + duracaoMinimaTrabalho;
+
+            primeiraPausaInicio.setMinutes(primeiraPausaInicio.getMinutes() + duracaoTrabalhoPrimeiraPausaInicio); // 1 hora e 40 minutos
+            let horaAtual = new Date(primeiraPausaInicio);
+
             let intervalos = [];
-            let horaAtual = new Date(horaInicioDate);
 
             while (horaAtual < horaFimDate) {
-                if (intervalos.length === 0) {
-                    horaAtual.setMinutes(horaAtual.getMinutes() + duracaoTrabalhoMinutos);
-                }
+                const duracaoTrabalhoMinutos = Math.floor(Math.random() * (duracaoMaximaTrabalho - duracaoMinimaTrabalho + 1)) + duracaoMinimaTrabalho;
 
                 const duracaoIntervalo = Math.floor(Math.random() * (duracaoMaximaIntervalo - duracaoMinimaIntervalo + 1)) + duracaoMinimaIntervalo;
-                const intervaloFim = new Date(horaAtual);
-                intervaloFim.setMinutes(intervaloFim.getMinutes() + duracaoIntervalo);
-                intervalos.push({ inicio: new Date(horaAtual), fim: intervaloFim, duracao: duracaoIntervalo });
-                horaAtual.setMinutes(horaAtual.getMinutes() + duracaoTrabalhoMinutos);
+
+                const inicioPausa = new Date(horaAtual);
+                const fimPausa = new Date(horaAtual);
+                fimPausa.setMinutes(fimPausa.getMinutes() + duracaoIntervalo);
+
+                intervalos.push({
+                    intervalo: (intervalos.length + 1) + 'ª pausa',
+                    inicioPausa: inicioPausa,
+                    fimPausa: fimPausa,
+                    duracaoTrabalho: duracaoTrabalhoMinutos,
+                    duracaoPausa: duracaoIntervalo
+                });
+
+                horaAtual.setMinutes(horaAtual.getMinutes() + duracaoTrabalhoMinutos + duracaoIntervalo);
             }
 
             const tabelaIntervalos = document.getElementById("tabelaIntervalos");
             tabelaIntervalos.innerHTML = `
         <h2>Horários de Intervalo:</h2>
         <table>
-          <thead>
-            <tr>
-              <th>Intervalo</th>
-              <th>Início da Pausa</th>
-              <th>Final da Pausa</th>
-              <th>Tempo de Pausa</th>
-            </tr>
-          </thead>
-          <tbody>`;
+            <thead>
+                <tr>
+                    <th>Intervalo</th>
+                    <th>Início da Pausa</th>
+                    <th>Final da Pausa</th>
+                    <th>Tempo de Trabalho</th>
+                    <th>Tempo de Pausa</th>
+                </tr>
+            </thead>
+            <tbody>`;
 
-            let textPausa = 'Pausa ';
+            let horaAnterior = new Date(horaInicioDate);
+
             for (let i = 0; i < intervalos.length; i++) {
                 const intervalo = intervalos[i];
                 const tr = document.createElement("tr");
                 const tdIntervalo = document.createElement("td");
-                tdIntervalo.textContent = (i + 1) + 'ª ' + textPausa;
+                tdIntervalo.textContent = intervalo.intervalo;
                 tr.appendChild(tdIntervalo);
-                const tdInicio = document.createElement("td");
-                tdInicio.textContent = formatarHora(intervalo.inicio);
-                tr.appendChild(tdInicio);
-                const tdFim = document.createElement("td");
-                tdFim.textContent = formatarHora(intervalo.fim);
-                tr.appendChild(tdFim);
-                const tdDuracao = document.createElement("td");
-                tdDuracao.textContent = `${intervalo.duracao} min`;
-                tr.appendChild(tdDuracao);
+
+                const tdInicioPausa = document.createElement("td");
+                tdInicioPausa.textContent = formatarHora(intervalo.inicioPausa);
+                tr.appendChild(tdInicioPausa);
+
+                const tdFimPausa = document.createElement("td");
+                tdFimPausa.textContent = formatarHora(intervalo.fimPausa);
+                tr.appendChild(tdFimPausa);
+
+                const tdDuracaoTrabalho = document.createElement("td");
+                const duracaoTrabalho = Math.floor((intervalo.inicioPausa - horaAnterior) / 60000); // Em minutos
+                tdDuracaoTrabalho.textContent = formatarTempo(duracaoTrabalho);
+                tr.appendChild(tdDuracaoTrabalho);
+
+                const tdDuracaoPausa = document.createElement("td");
+                tdDuracaoPausa.textContent = `${intervalo.duracaoPausa} min`;
+                tr.appendChild(tdDuracaoPausa);
+
                 tabelaIntervalos.querySelector("tbody").appendChild(tr);
+
+                horaAnterior = intervalo.fimPausa;
             }
 
             tabelaIntervalos.innerHTML += `
-          </tbody>
+            </tbody>
         </table>`;
-
         }
+
         function formatarHora(data) {
             const horas = data.getHours().toString().padStart(2, '0');
             const minutos = data.getMinutes().toString().padStart(2, '0');
             return `${horas}:${minutos}`;
         }
+
+        function formatarTempo(minutos) {
+            const horas = Math.floor(minutos / 60);
+            const minutosRestantes = minutos % 60;
+            return `${horas}h${minutosRestantes}m`;
+        }
     </script>
+
 </head>
 
 <body>
@@ -196,11 +230,9 @@
         <div id="descricao">
             <h3>Funcionalidades:</h3>
             <p>Esta calculadora gera automaticamente os horários de intervalo durante um período de trabalho,
-                considerando
-                um tempo de trabalho aleatório entre 1 hora e 30 minutos a 1 hora e 40 minutos. Os intervalos de pausa
-                são
-                gerados de forma aleatória entre 20 e 25 minutos.</p>
-
+                considerando um tempo de trabalho de 1 hora e 40 minutos para a primeira pausa, e intervalos de pausa de
+                20 minutos entre as demais pausas. Os horários de início e fim das pausas são calculados de acordo com
+                os requisitos informados.</p>
         </div>
     </div>
 </body>
