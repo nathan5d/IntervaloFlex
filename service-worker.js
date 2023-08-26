@@ -1,6 +1,6 @@
 const CACHE_NAME = "intervalo-flex-cache-v1";
 const urlsToCache = [
-  "/",
+  "/IntervaloFlex/",
   "index.html",
   "icon.png",
   // List any other static assets you want to cache
