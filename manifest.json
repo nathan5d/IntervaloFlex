@@ -2,7 +2,7 @@
     "name": "IntervaloFlex",
     "short_name": "IntervaloFlex",
     "description": "Calculadora de Intervalos de Pausa",
-    "start_url": "/IntervaloFlex/",
+    "start_url": "https://nathan5d.github.io/IntervaloFlex/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#007bff",
@@ -13,7 +13,7 @@
         "type": "image/png"
       }
     ],
-    "scope": "/IntervaloFlex/",
+    "scope": "https://nathan5d.github.io/IntervaloFlex/",
     "serviceworker": {
       "src": "service-worker.js"
     }
