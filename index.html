@@ -108,6 +108,10 @@
             background-color: #f2f2f2;
         }
 
+        .logo img {
+            width: 5.9rem;
+        }
+
         #descricao {
             text-align: left;
             margin-top: 20px;
@@ -229,6 +233,10 @@
 
 <body>
     <div class="container">
+        <div class="logo">
+            <img src="logo.png" alt="IntervaloFlex Logo">
+        </div>
+
         <h1>Calculadora de Intervalos de Pausa</h1>
         <label for="horaInicio">Hora de Início:</label>
         <input type="time" id="horaInicio">
@@ -241,18 +249,24 @@
 
         <div id="descricao">
             <h3>Funcionalidades:</h3>
-            <p>Esta calculadora de intervalos de pausa foi projetada para automatizar a geração de horários de intervalo durante um período de trabalho. Aqui estão as principais características:</p>
+            <p>Esta calculadora de intervalos de pausa foi projetada para automatizar a geração de horários de intervalo
+                durante um período de trabalho. Aqui estão as principais características:</p>
             <ul>
                 <li>Gere horários de pausa com base em intervalos de tempo personalizados.</li>
-                <li>A primeira pausa é calculada a partir do horário de início definido, considerando um tempo de trabalho entre 1 hora e 35 minutos a 1 hora e 40 minutos.</li>
-                <li>Para as demais pausas, o horário de início é calculado com base no final da pausa anterior, mantendo intervalos de 20 a 25 minutos.</li>
+                <li>A primeira pausa é calculada a partir do horário de início definido, considerando um tempo de
+                    trabalho entre 1 hora e 35 minutos a 1 hora e 40 minutos.</li>
+                <li>Para as demais pausas, o horário de início é calculado com base no final da pausa anterior, mantendo
+                    intervalos de 20 a 25 minutos.</li>
                 <li>Obtenha resultados precisos e aleatórios a cada geração de horários.</li>
-                <li>Visualize os horários de início e fim de cada pausa, o tempo de trabalho correspondente e a duração da pausa.</li>
-                <li>O layout responsivo garante uma experiência consistente em dispositivos diferentes, ajustando-se automaticamente a várias resoluções de tela.</li>
+                <li>Visualize os horários de início e fim de cada pausa, o tempo de trabalho correspondente e a duração
+                    da pausa.</li>
+                <li>O layout responsivo garante uma experiência consistente em dispositivos diferentes, ajustando-se
+                    automaticamente a várias resoluções de tela.</li>
             </ul>
-            <p>Use esta calculadora para simplificar o processo de planejamento de pausas durante o expediente, tornando-o mais eficiente e personalizado.</p>
+            <p>Use esta calculadora para simplificar o processo de planejamento de pausas durante o expediente,
+                tornando-o mais eficiente e personalizado.</p>
         </div>
-        
+
     </div>
 </body>
 
