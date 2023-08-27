@@ -131,7 +131,24 @@
         document.addEventListener("DOMContentLoaded", () => {
             const offlineMessage = document.getElementById("offline-message");
             offlineMessage.style.display = navigator.onLine ? "none" : "block";
+
+            
+            const descricao = document.getElementById("descricao");
+            const btnOpenDescricao = document.getElementById("openDescricaoBtn");
+            const btnCloseDescricao = descricao.querySelector(".close");
+
+            // Exibir a descrição com animação de slideUp
+            btnOpenDescricao.addEventListener("click", function () {
+                descricao.classList.add("active");
+            });
+
+            // Ocultar a descrição com animação de slideDown
+            btnCloseDescricao.addEventListener("click", function () {
+                descricao.classList.remove("active");
+            });
         });
+
+
 
     </script>
 
@@ -153,8 +170,17 @@
         </div>
         <div id="tabelaIntervalos"></div>
 
-        <div id="descricao">
-            <h3>Funcionalidades:</h3>
+        <!-- Botão para abrir o modal -->
+        <!-- Modal -->
+       
+        <div id="descricao" >
+
+            <div class="header">
+                <span id="openDescricaoBtn">Funcionalidades:</span>
+
+                <span class="close">&times;</span>
+            </div>
+            
             <p>Esta calculadora de intervalos de pausa foi projetada para automatizar a geração de horários de intervalo
                 durante um período de trabalho. Aqui estão as principais características:</p>
             <ul>
@@ -182,7 +208,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('service-worker.js')
+                navigator.serviceWorker.register('/service-worker.js')
                     .then(registration => {
                         console.log('Service Worker registrado com sucesso:', registration);
                     })
