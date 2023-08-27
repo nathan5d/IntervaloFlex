@@ -164,17 +164,21 @@ td {
     background-color: #f2f2f2;
 }
 .header {
-    height: 40px;
+    height: 25px;
     display: flex;
     justify-content: center;
     font-weight: bold;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
 }
 .close {
+    display: none;
     position: absolute;
-    top: 10px;
+    top: 5px;
     right: 10px;
     font-size: 24px;
     cursor: pointer;
+}
+#descricao.active .close{
+    display: block;
 }
