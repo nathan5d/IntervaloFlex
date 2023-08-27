@@ -15,7 +15,7 @@
     ],
     "scope": "/IntervaloFlex/",
     "serviceworker": {
-      "src": "/IntervaloFlex/service-worker.js"
+      "src": "service-worker.js"
     }
   }
   
