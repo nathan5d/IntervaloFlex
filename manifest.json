@@ -15,7 +15,7 @@
     ],
     "scope": "https://nathan5d.github.io/IntervaloFlex/",
     "serviceworker": {
-      "src": "service-worker.js"
+      "src": "https://nathan5d.github.io/IntervaloFlex/service-worker.js"
     }
   }
   
