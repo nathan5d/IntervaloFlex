@@ -142,6 +142,7 @@ td {
     width: auto;
     height: 25px;
     margin: 0 12px;
+    padding-bottom: 20px;
 
     transition: bottom 0.3s ease-in-out;
 }
