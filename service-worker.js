@@ -2,7 +2,6 @@ const CACHE_NAME = "intervalo-flex-cache-v2";
 const CACHE_TIME = 5 * 24 * 60 * 60 * 1000; // 5 dias em milissegundos
 
 const urlsToCache = [
-    "/",
     "/IntervaloFlex/",
     "/IntervaloFlex/index.html",
     "/IntervaloFlex/style.css",
