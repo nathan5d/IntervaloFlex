@@ -19,7 +19,11 @@
 
     <link rel="stylesheet" href="style.css">
     <script>
+
+
         function calcularIntervalos() {
+
+
             const horaInicio = document.getElementById("horaInicio").value;
             const horaFim = document.getElementById("horaFim").value;
 
@@ -122,6 +126,13 @@
             const minutosRestantes = minutos % 60;
             return `${horas}h${minutosRestantes}m`;
         }
+
+        // Verificar status da conexão e exibir mensagem offline ao carregar a página
+        document.addEventListener("DOMContentLoaded", () => {
+            const offlineMessage = document.getElementById("offline-message");
+            offlineMessage.style.display = navigator.onLine ? "none" : "block";
+        });
+
     </script>
 
 </head>
@@ -161,6 +172,10 @@
             <p>Use esta calculadora para simplificar o processo de planejamento de pausas durante o expediente,
                 tornando-o mais eficiente e personalizado.</p>
         </div>
+        <div id="offline-message" class="offline-message">
+            Você está offline. O conteúdo pode não estar atualizado.
+        </div>
+
 
     </div>
 
@@ -177,7 +192,7 @@
             });
         }
     </script>
-    
+
 </body>
 
 </html>
