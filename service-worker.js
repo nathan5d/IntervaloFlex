@@ -5,6 +5,7 @@ const urlsToCache = [
   "/IntervaloFlex/",
   "/IntervaloFlex/index.html",
   "/IntervaloFlex/icon.png",
+  "/IntervaloFlex/service-worker.js",
   // Adicione outros recursos que deseja cachear aqui
 ];
 
