@@ -1,0 +1,120 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    max-width: 400px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    margin-top: 0;
+    color: #007bff;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Estilos para inputs de time em dispositivos móveis */
+input[type="time"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: #ffffff;
+    min-height: 40px;
+}
+
+.btn-content,
+.btn-content button {
+    width: 100%;
+    min-height: 40px;
+}
+
+
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+
+
+th {
+    background-color: #f2f2f2;
+}
+
+th,
+td {
+    border: 3px solid #f2f2f2;
+    padding: 8px;
+    text-align: center;
+}
+
+
+.logo img {
+    width: 5.9rem;
+}
+.container{
+    position: relative;
+}
+#descricao {
+    text-align: left;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f2f2f2;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+/*
+#descricao{
+    width: 100%;
+    height: 100%;
+    max-width: 400px;
+    position: fixed;
+    bottom: -80%;
+}
+*/
