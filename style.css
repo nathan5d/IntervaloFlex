@@ -141,7 +141,7 @@ td {
     bottom: 0;
     width: auto;
     height: 25px;
-    margin: 0 20px;
+    margin: 0 12px;
 
     transition: bottom 0.3s ease-in-out;
 }
