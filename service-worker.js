@@ -4,6 +4,7 @@ const CACHE_TIME = 5 * 24 * 60 * 60 * 1000; // 5 dias em milissegundos
 const urlsToCache = [
     "/IntervaloFlex/",
     "/IntervaloFlex/index.html",
+    "/IntervaloFlex/fallback.html",
     "/IntervaloFlex/style.css",
     "/IntervaloFlex/icon.png",
     "/IntervaloFlex/logo.png",
