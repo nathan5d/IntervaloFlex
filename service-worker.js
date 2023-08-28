@@ -38,47 +38,29 @@ self.addEventListener("activate", (event) => {
     );
 });
 
-// Dentro do fetch event no Service Worker
-self.addEventListener('fetch', (event) => {
+self.addEventListener("fetch", (event) => {
     event.respondWith(
         caches.match(event.request).then((response) => {
             if (response) {
-                // Recurso encontrado no cache, atualiza o elemento com a mensagem
-                updateCacheStatus(true);
                 return response;
             }
 
+            if (!navigator.onLine) {
+                return new Response("Você está offline. O conteúdo pode não estar atualizado.");
+            }
+
             return fetch(event.request).then((networkResponse) => {
+                if (!networkResponse || networkResponse.status !== 200) {
+                    return networkResponse;
+                }
+
                 const cacheResponse = networkResponse.clone();
                 caches.open(CACHE_NAME).then((cache) => {
                     cache.put(event.request, cacheResponse);
                 });
 
-                // Recurso carregado do servidor, atualiza o elemento com a mensagem
-                updateCacheStatus(false);
                 return networkResponse;
             });
         })
     );
-});
-
-// Função para atualizar o elemento de status do cache
-function updateCacheStatus(fromCache) {
-    const cacheStatusElement = document.getElementById('cache-status');
-    cacheStatusElement.textContent = fromCache ? 'Carregado do Cache' : 'Carregado do Servidor';
-}
-
-// Verificar status da conexão e exibir mensagem offline ao carregar a página
-self.addEventListener("fetch", (event) => {
-    if (!navigator.onLine) {
-        event.respondWith(
-            caches.match(event.request).then((response) => {
-                if (response) {
-                    return response;
-                }
-
-                return new Response("Você está offline. O conteúdo pode não estar atualizado.");
-            })
-        );
-    }
 });
