@@ -19,26 +19,33 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-    event.respondWith(
-        caches.match(event.request).then((response) => {
-            if (response) {
-                return response;
-            }
-
-            return fetch(event.request).then((networkResponse) => {
-                if (!networkResponse || networkResponse.status !== 200) {
-                    return networkResponse;
-                }
-
-                const cacheResponse = networkResponse.clone();
-                caches.open(CACHE_NAME).then((cache) => {
-                    cache.put(event.request, cacheResponse);
+  event.respondWith(
+    caches.match(event.request)
+      .then((response) => {
+        // Se encontrarmos uma resposta no cache, retornamos a resposta do cache
+        if (response) {
+          return response;
+        }
+        
+        // Caso contrário, fazemos uma solicitação de rede
+        return fetch(event.request)
+          .then((networkResponse) => {
+            // Se a solicitação de rede for bem-sucedida, adicionamos a resposta ao cache
+            if (networkResponse) {
+              const cacheCopy = networkResponse.clone();
+              caches.open(CACHE_NAME)
+                .then((cache) => {
+                  cache.put(event.request, cacheCopy);
                 });
-
-                return networkResponse;
-            });
-        })
-    );
+            }
+            return networkResponse;
+          })
+          .catch(() => {
+            // Se a solicitação de rede falhar, podemos retornar uma página de fallback
+            // ou uma mensagem de erro, dependendo do que você deseja
+          });
+      })
+  );
 });
 
 self.addEventListener("activate", (event) => {
