@@ -1,4 +1,5 @@
-const CACHE_NAME = "intervalo-flex-cache-v2";
+const CACHE_VERSION = "v3"; // Atualize a versão sempre que fizer alterações no cache
+const CACHE_NAME = `intervalo-flex-cache-${CACHE_VERSION}`;
 const CACHE_TIME = 5 * 24 * 60 * 60 * 1000; // 5 dias em milissegundos
 
 const urlsToCache = [
@@ -10,6 +11,19 @@ const urlsToCache = [
     // Adicione outros recursos que deseja cachear aqui
 ];
 
+// Função para limpar caches antigos
+const cleanOldCaches = () => {
+    return caches.keys().then((cacheNames) => {
+        return Promise.all(
+            cacheNames.map((cacheName) => {
+                if (cacheName !== CACHE_NAME) {
+                    return caches.delete(cacheName);
+                }
+            })
+        );
+    });
+};
+
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
@@ -18,51 +32,31 @@ self.addEventListener("install", (event) => {
     );
 });
 
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Se encontrarmos uma resposta no cache, retornamos a resposta do cache
-        if (response) {
-          return response;
-        }
-        
-        // Caso contrário, fazemos uma solicitação de rede
-        return fetch(event.request)
-          .then((networkResponse) => {
-            // Se a solicitação de rede for bem-sucedida, adicionamos a resposta ao cache
-            if (networkResponse) {
-              const cacheCopy = networkResponse.clone();
-              caches.open(CACHE_NAME)
-                .then((cache) => {
-                  cache.put(event.request, cacheCopy);
-                });
-            }
-            return networkResponse;
-          })
-          .catch(() => {
-            // Se a solicitação de rede falhar, podemos retornar uma página de fallback
-            // ou uma mensagem de erro, dependendo do que você deseja
-          });
-      })
-  );
-});
-
 self.addEventListener("activate", (event) => {
     event.waitUntil(
-        caches.keys().then((cacheNames) => {
-            return Promise.all(
-                cacheNames
-                    .filter((cacheName) => {
-                        return (
-                            cacheName.startsWith("intervalo-flex-cache-") &&
-                            cacheName !== CACHE_NAME
-                        );
-                    })
-                    .map((cacheName) => {
-                        return caches.delete(cacheName);
-                    })
-            );
+        cleanOldCaches()
+    );
+});
+
+self.addEventListener("fetch", (event) => {
+    event.respondWith(
+        caches.match(event.request).then((response) => {
+            if (response) {
+                return response;
+            }
+
+            return fetch(event.request).then((networkResponse) => {
+                if (!networkResponse || networkResponse.status !== 200) {
+                    return networkResponse;
+                }
+
+                const cacheResponse = networkResponse.clone();
+                caches.open(CACHE_NAME).then((cache) => {
+                    cache.put(event.request, cacheResponse);
+                });
+
+                return networkResponse;
+            });
         })
     );
 });
