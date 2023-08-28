@@ -63,18 +63,3 @@ self.addEventListener("activate", (event) => {
         })
     );
 });
-
-// Verificar status da conexão e exibir mensagem offline ao carregar a página
-self.addEventListener("fetch", (event) => {
-    if (!navigator.onLine) {
-        event.respondWith(
-            caches.match(event.request).then((response) => {
-                if (response) {
-                    return response;
-                }
-
-                return new Response("Você está offline. O conteúdo pode não estar atualizado.");
-            })
-        );
-    }
-});
