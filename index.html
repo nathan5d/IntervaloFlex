@@ -24,17 +24,20 @@
         function calcularIntervalos() {
 
 
+
+
             const horaInicio = document.getElementById("horaInicio").value;
-    const horaFim = document.getElementById("horaFim").value;
+            const horaFim = document.getElementById("horaFim").value;
 
-    const horaInicioDate = new Date(`2023-08-23T${horaInicio}:00`);
-    let horaFimDate = new Date(`2023-08-23T${horaFim}:00`);
+            const horaInicioDate = new Date(`2023-08-23T${horaInicio}:00`);
+            let horaFimDate = new Date(`2023-08-23T${horaFim}:00`);
 
-    // Verificar se o horário final é anterior ao horário inicial (após a meia-noite)
-    if (horaFimDate < horaInicioDate) {
-        // Adicionar 1 dia ao horário final
-        horaFimDate.setDate(horaFimDate.getDate() + 1);
-    }
+            // Verificar se o horário final é anterior ao horário inicial (após a meia-noite)
+            if (horaFimDate < horaInicioDate) {
+                // Adicionar 1 dia ao horário final
+                horaFimDate.setDate(horaFimDate.getDate() + 1);
+            }
+
             const duracaoMinimaTrabalho = 95; // 1h35m em minutos
             const duracaoMaximaTrabalho = 100; // 1h40m em minutos
 
@@ -137,7 +140,7 @@
             const offlineMessage = document.getElementById("offline-message");
             offlineMessage.style.display = navigator.onLine ? "none" : "block";
 
-            
+
             const descricao = document.getElementById("descricao");
             const btnOpenDescricao = document.getElementById("openDescricaoBtn");
             const btnCloseDescricao = descricao.querySelector(".close");
@@ -161,7 +164,7 @@
 
 <body>
     <div class="container">
-        
+
         <div class="logo">
             <img src="logo.png" alt="IntervaloFlex Logo">
         </div>
@@ -178,15 +181,15 @@
 
         <!-- Botão para abrir o modal -->
         <!-- Modal -->
-       
-        <div id="descricao" >
+
+        <div id="descricao">
 
             <div class="header">
                 <span id="openDescricaoBtn">Funcionalidades:</span>
 
                 <span class="close">&times;</span>
             </div>
-            
+
             <p>Esta calculadora de intervalos de pausa foi projetada para automatizar a geração de horários de intervalo
                 durante um período de trabalho. Aqui estão as principais características:</p>
             <ul>

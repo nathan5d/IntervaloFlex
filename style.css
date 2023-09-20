@@ -79,7 +79,9 @@ table {
     margin-top: 20px;
     font-size: 14px;
 }
-
+#tabelaIntervalos {
+    margin-bottom: 50px;
+}
 
 
 th {
