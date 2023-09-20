@@ -25,11 +25,16 @@
 
 
             const horaInicio = document.getElementById("horaInicio").value;
-            const horaFim = document.getElementById("horaFim").value;
+    const horaFim = document.getElementById("horaFim").value;
 
-            const horaInicioDate = new Date(`2023-08-23T${horaInicio}:00`);
-            const horaFimDate = new Date(`2023-08-23T${horaFim}:00`);
+    const horaInicioDate = new Date(`2023-08-23T${horaInicio}:00`);
+    let horaFimDate = new Date(`2023-08-23T${horaFim}:00`);
 
+    // Verificar se o horário final é anterior ao horário inicial (após a meia-noite)
+    if (horaFimDate < horaInicioDate) {
+        // Adicionar 1 dia ao horário final
+        horaFimDate.setDate(horaFimDate.getDate() + 1);
+    }
             const duracaoMinimaTrabalho = 95; // 1h35m em minutos
             const duracaoMaximaTrabalho = 100; // 1h40m em minutos
 
